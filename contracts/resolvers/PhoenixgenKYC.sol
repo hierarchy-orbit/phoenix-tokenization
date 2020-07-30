@@ -4,11 +4,11 @@ import "../SnowflakeResolver.sol";
 import "../interfaces/IdentityRegistryInterface.sol";
 import "../interfaces/SnowflakeInterface.sol";
 
-contract PhoenixgenKYC is SnowflakeResolver {
+contract PhoenixKYC is SnowflakeResolver {
     IdentityRegistryInterface identityRegistry;
 
     constructor (address snowflakeAddress)
-        SnowflakeResolver("Phoenixgen KYC", "Perform KYC through Phoenixgen.", snowflakeAddress, true, true) public
+        SnowflakeResolver("Phoenix KYC", "Perform KYC through Phoenix.", snowflakeAddress, true, true) public
     {
         setSnowflakeAddress(snowflakeAddress);
     }
@@ -24,18 +24,18 @@ contract PhoenixgenKYC is SnowflakeResolver {
     // allows identity nodes to declare themselves
     function newIdentityNode (string memory identityNodePlaintext, bytes memory extraData) public {
         bytes32 identityNode = keccak256(abi.encodePacked(msg.sender, identityNodePlaintext));
-        emit PhoenixgenKYCNewIdentityNode(identityNode, msg.sender, identityNodePlaintext, extraData);
+        emit PhoenixKYCNewIdentityNode(identityNode, msg.sender, identityNodePlaintext, extraData);
     }
 
     // allows identity nodes to update their extraData
     function updateIdentityNode (string memory identityNodePlaintext, bytes memory extraData) public {
         bytes32 identityNode = keccak256(abi.encodePacked(msg.sender, identityNodePlaintext));
-        emit PhoenixgenKYCUpdateIdentityNode(identityNode, extraData);
+        emit PhoenixKYCUpdateIdentityNode(identityNode, extraData);
     }
 
     // implement addition function
     function onAddition(uint ein, uint, bytes memory extraData) public senderIsSnowflake() returns (bool) {
-        emit PhoenixgenKYCSignUp(ein);
+        emit PhoenixKYCSignUp(ein);
         (bytes32 identityNode) = abi.decode(extraData, (bytes32));
         addIdentityNode(ein, identityNode);
         return true;
@@ -54,7 +54,7 @@ contract PhoenixgenKYC is SnowflakeResolver {
 
     function _addIdentityNode (uint ein, bytes32 identityNode) private {
         require(identityRegistry.isResolverFor(ein, address(this)), "The EIN has not set this resolver.");
-        emit PhoenixgenKYCIdentityNodeAdded(ein, identityNode);
+        emit PhoenixKYCIdentityNodeAdded(ein, identityNode);
     }
 
     // revokes an identity node for the sender's EIN
@@ -70,22 +70,22 @@ contract PhoenixgenKYC is SnowflakeResolver {
 
     function _revokeIdentityNode (uint ein, bytes32 identityNode) private {
         require(identityRegistry.isResolverFor(ein, address(this)), "The EIN has not set this resolver.");
-        emit PhoenixgenKYCIdentityNodeRevoked(ein, identityNode);
+        emit PhoenixKYCIdentityNodeRevoked(ein, identityNode);
     }
 
     // implement removal function
     function onRemoval(uint ein, bytes memory) public senderIsSnowflake() returns (bool) {
-        emit PhoenixgenKYCRemoval(ein);
+        emit PhoenixKYCRemoval(ein);
         return true;
     }
 
-    event PhoenixgenKYCNewIdentityNode(
+    event PhoenixKYCNewIdentityNode(
         bytes32 indexed identityNode, address identityNodeAddress, string identityNodePlaintext, bytes extraData
     );
-    event PhoenixgenKYCUpdateIdentityNode(bytes32 indexed identityNode, bytes extraData);
+    event PhoenixKYCUpdateIdentityNode(bytes32 indexed identityNode, bytes extraData);
 
-    event PhoenixgenKYCSignUp(uint ein);
-    event PhoenixgenKYCIdentityNodeAdded(uint indexed ein, bytes32 indexed identityNode);
-    event PhoenixgenKYCIdentityNodeRevoked(uint indexed ein, bytes32 indexed identityNode);
-    event PhoenixgenKYCRemoval(uint ein);
+    event PhoenixKYCSignUp(uint ein);
+    event PhoenixKYCIdentityNodeAdded(uint indexed ein, bytes32 indexed identityNode);
+    event PhoenixKYCIdentityNodeRevoked(uint indexed ein, bytes32 indexed identityNode);
+    event PhoenixKYCRemoval(uint ein);
 }
