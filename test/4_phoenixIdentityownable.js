@@ -1,5 +1,5 @@
 const truffleAssert = require('truffle-assertions')
-const SnowflakeOwnable = artifacts.require('./components/SnowflakeOwnable.sol')
+const PhoenixIdentityOwnable = artifacts.require('./components/PhoenixIdentityOwnable.sol')
 const utilities = require('./utilities')
 const common = require('./common.js')
 
@@ -12,7 +12,7 @@ let owner
 
 let ownerEIN
 
-contract('Testing SnowflakeOwnable', function (accounts) {
+contract('Testing PhoenixIdentityOwnable', function (accounts) {
 
   it('Users created', async () => {
     users = await common.createUsers(accounts);
@@ -23,7 +23,7 @@ contract('Testing SnowflakeOwnable', function (accounts) {
     instances = await common.initialize(owner.address, users);
   })
 
-  it('Snowflake identities created for all accounts', async() => {
+  it('PhoenixIdentity identities created for all accounts', async() => {
     for (let i = 0; i < users.length; i++) {
       await utilities.createIdentity(users[i], instances, {from: owner.address});
     }
@@ -56,99 +56,99 @@ contract('Testing SnowflakeOwnable', function (accounts) {
   })
 
 
-  describe('Checking SnowflakeOwnable functionality', async() =>{
+  describe('Checking PhoenixIdentityOwnable functionality', async() =>{
 
-    // Create SnowflakeOwnable contract
-    it('SnowflakeOwnable can be created', async () => {
-      newSnowflakeOwnable = await SnowflakeOwnable.new(
+    // Create PhoenixIdentityOwnable contract
+    it('PhoenixIdentityOwnable can be created', async () => {
+      newPhoenixIdentityOwnable = await PhoenixIdentityOwnable.new(
         {from: users[1].address}
       )
-        console.log('      SnowflakeOwnable Address', newSnowflakeOwnable.address)
+        console.log('      PhoenixIdentityOwnable Address', newPhoenixIdentityOwnable.address)
         console.log('      users[1]', users[1].address)
     })
 
-    it('SnowflakeOwnable exists', async () => {
-      ownerEIN = await newSnowflakeOwnable.ownerEIN()//{from: users[1].address})
+    it('PhoenixIdentityOwnable exists', async () => {
+      ownerEIN = await newPhoenixIdentityOwnable.ownerEIN()//{from: users[1].address})
       console.log('      Owner EIN', ownerEIN)
     })
 
-    it('SnowflakeOwnable set Identity Registry', async () => {
+    it('PhoenixIdentityOwnable set Identity Registry', async () => {
       console.log('      Identity Registry Address', instances.IdentityRegistry.address)
-      await newSnowflakeOwnable.setIdentityRegistryAddress(
+      await newPhoenixIdentityOwnable.setIdentityRegistryAddress(
         instances.IdentityRegistry.address,
         {from: users[1].address}
       )
     })
 
-    it('SnowflakeOwnable get Identity Registry Address', async () => {
-      _snowIDaddress = await newSnowflakeOwnable.getIdentityRegistryAddress(
+    it('PhoenixIdentityOwnable get Identity Registry Address', async () => {
+      _snowIDaddress = await newPhoenixIdentityOwnable.getIdentityRegistryAddress(
         //{from: users[1].address}
       )
-      console.log('      snowflake ownable identity registry address', _snowIDaddress)
+      console.log('      PhoenixIdentity ownable identity registry address', _snowIDaddress)
     })
 
-    it('SnowflakeOwnable get owner EIN', async () => {
-      ownerEIN = await newSnowflakeOwnable.getOwnerEIN(
+    it('PhoenixIdentityOwnable get owner EIN', async () => {
+      ownerEIN = await newPhoenixIdentityOwnable.getOwnerEIN(
         //{from: users[1].address}
       )
-      console.log('      snowflake ownable owner EIN', ownerEIN)
+      console.log('      PhoenixIdentity ownable owner EIN', ownerEIN)
     })
 
     // Try to transfer ownership to an identity which does not exist
     // owner is users[0]
-    it('Snowflake ownable transfer ownership (no identity, should revert)', async () => {
+    it('PhoenixIdentity ownable transfer ownership (no identity, should revert)', async () => {
       await truffleAssert.reverts(
-        newSnowflakeOwnable.setOwnerEIN(
+        newPhoenixIdentityOwnable.setOwnerEIN(
           21,
           {from: users[1].address}),
           'New owner identity must exist'
       )
     })
 
-    it('SnowflakeOwnable get owner EIN', async () => {
-      ownerEIN = await newSnowflakeOwnable.getOwnerEIN(
+    it('PhoenixIdentityOwnable get owner EIN', async () => {
+      ownerEIN = await newPhoenixIdentityOwnable.getOwnerEIN(
         //{from: users[1].address}
       )
-      console.log('      snowflake ownable new owner EIN after transfer 1', ownerEIN)
+      console.log('      PhoenixIdentity ownable new owner EIN after transfer 1', ownerEIN)
     })
 
     // Try to transfer ownership without being the owner
     // owner is users[1]
-    it('Snowflake ownable transfer ownership (not the owner, should revert)', async () => {
+    it('PhoenixIdentity ownable transfer ownership (not the owner, should revert)', async () => {
       _ein = await instances.IdentityRegistry.getEIN(
         users[3].address,
         //{from: users[2].address}
       )
       console.log('      EIN users[3]', _ein)
       await truffleAssert.reverts(
-        newSnowflakeOwnable.setOwnerEIN(
+        newPhoenixIdentityOwnable.setOwnerEIN(
           _ein,
           {from: users[2].address}),
           'Must be the EIN owner to call this function'
       )
     })
 
-    it('SnowflakeOwnable get owner EIN', async () => {
-      ownerEIN = await newSnowflakeOwnable.getOwnerEIN(
+    it('PhoenixIdentityOwnable get owner EIN', async () => {
+      ownerEIN = await newPhoenixIdentityOwnable.getOwnerEIN(
         //{from: users[1].address}
       )
-      console.log('      snowflake ownable new owner EIN after transfer 2', ownerEIN)
+      console.log('      PhoenixIdentity ownable new owner EIN after transfer 2', ownerEIN)
     })
 
     // Transfer ownership being the owner
     // owner is users[0]
-    it('Snowflake ownable transfer ownership', async () => {
-      await newSnowflakeOwnable.setOwnerEIN(
+    it('PhoenixIdentity ownable transfer ownership', async () => {
+      await newPhoenixIdentityOwnable.setOwnerEIN(
         9,
         {from: users[1].address}
       )
     })
 
-    it('SnowflakeOwnable get owner EIN', async () => {
-      ownerEIN = await newSnowflakeOwnable.getOwnerEIN(
+    it('PhoenixIdentityOwnable get owner EIN', async () => {
+      ownerEIN = await newPhoenixIdentityOwnable.getOwnerEIN(
         //{from: users[1].address}
       )
-      console.log('      snowflake ownable new owner EIN after transfer 3', ownerEIN)
+      console.log('      PhoenixIdentity ownable new owner EIN after transfer 3', ownerEIN)
     })
 
   })

@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 //import '../PSToken.sol';
-import './SnowflakeOwnable.sol';
+import './PhoenixIdentityOwnable.sol';
 import './PSTokenRegistry.sol';
 import '../_testing/IdentityRegistry.sol';
 
@@ -16,7 +16,7 @@ import '../_testing/IdentityRegistry.sol';
  * @author Fatima Castiglione Maldonado <castiglionemaldonado@gmail.com>
  */
 
-contract PSTServiceRegistry is SnowflakeOwnable {
+contract PSTServiceRegistry is PhoenixIdentityOwnable {
 
   // existing contracts to call
   IdentityRegistry identityRegistry;

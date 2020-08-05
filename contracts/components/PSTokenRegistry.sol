@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 import '../PSToken.sol';
 import '../interfaces/IdentityRegistryInterfaceShort.sol';
 import './PSTServiceRegistry.sol';
-import './SnowflakeOwnable.sol';
+import './PhoenixIdentityOwnable.sol';
 
 
 /**
@@ -11,7 +11,7 @@ import './SnowflakeOwnable.sol';
  * @notice Keep track of contracts for the issuance of Phoenix Securities
  * @author Fatima Castiglione Maldonado <castiglionemaldonado@gmail.com>
  */
-contract PSTokenRegistry is SnowflakeOwnable {
+contract PSTokenRegistry is PhoenixIdentityOwnable {
 
   struct TokenData {
     uint id;

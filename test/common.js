@@ -1,4 +1,4 @@
-const ClientRaindrop = artifacts.require('./resolvers/ClientRaindrop/ClientRaindrop.sol')
+const ClientPhoenixAuthentication = artifacts.require('./resolvers/ClientPhoenixAuthentication/ClientPhoenixAuthentication.sol')
 const DateTime = artifacts.require('./components/DateTime.sol')
 const PhoenixToken = artifacts.require('./_testing/PhoenixToken.sol')
 const PSTBuyerRegistry = artifacts.require('./components/PSTBuyerRegistry.sol')
@@ -6,8 +6,8 @@ const PSTokenRegistry = artifacts.require('./components/PSTokenRegistry.sol')
 const PSTServiceRegistry = artifacts.require('./components/PSTServiceRegistry.sol')
 const IdentityRegistry = artifacts.require('./_testing/IdentityRegistry.sol')
 const KYCResolver = artifacts.require('./samples/KYCResolver.sol')
-const OldClientRaindrop = artifacts.require('./_testing/OldClientRaindrop.sol')
-const Snowflake = artifacts.require('./Snowflake.sol')
+const OldClientPhoenixAuthentication = artifacts.require('./_testing/OldClientPhoenixAuthentication.sol')
+const PhoenixIdentity = artifacts.require('./PhoenixIdentity.sol')
 
 
 async function createUsers (accounts) {
@@ -133,21 +133,21 @@ async function initialize (systemOwnerAddress, users) {
   instances.IdentityRegistry = await IdentityRegistry.new({ from: systemOwnerAddress })
   console.log("    common - Identity Registry", instances.IdentityRegistry.address)
 
-  instances.Snowflake = await Snowflake.new(
+  instances.PhoenixIdentity = await PhoenixIdentity.new(
     instances.IdentityRegistry.address, instances.PhoenixToken.address, { from: systemOwnerAddress }
   )
-  console.log("    common - Snowflake", instances.Snowflake.address)
+  console.log("    common - PhoenixIdentity", instances.PhoenixIdentity.address)
 
-  instances.OldClientRaindrop = await OldClientRaindrop.new({ from: systemOwnerAddress })
-  console.log("    common - Old Client Raindrop", instances.OldClientRaindrop.address)
+  instances.OldClientPhoenixAuthentication = await OldClientPhoenixAuthentication.new({ from: systemOwnerAddress })
+  console.log("    common - Old Client PhoenixAuthentication", instances.OldClientPhoenixAuthentication.address)
 
-  instances.ClientRaindrop = await ClientRaindrop.new(
-    instances.Snowflake.address, instances.OldClientRaindrop.address, 0, 0, { from: systemOwnerAddress }
+  instances.ClientPhoenixAuthentication = await ClientPhoenixAuthentication.new(
+    instances.PhoenixIdentity.address, instances.OldClientPhoenixAuthentication.address, 0, 0, { from: systemOwnerAddress }
   )
-  await instances.Snowflake.setClientRaindropAddress(
-    instances.ClientRaindrop.address, { from: systemOwnerAddress }
+  await instances.PhoenixIdentity.setClientPhoenixAuthenticationAddress(
+    instances.ClientPhoenixAuthentication.address, { from: systemOwnerAddress }
   )
-  console.log("    common - Client Raindrop", instances.ClientRaindrop.address)
+  console.log("    common - Client PhoenixAuthentication", instances.ClientPhoenixAuthentication.address)
 
   instances.KYCResolver = await KYCResolver.new( {from: systemOwnerAddress })
   console.log("    common - KYC Resolver", instances.KYCResolver.address)

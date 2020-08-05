@@ -6,12 +6,12 @@ const PhoenixToken = artifacts.require('./_testing/PhoenixToken.sol')
 
 const SafeMath = artifacts.require('./zeppelin/math/SafeMath.sol')
 const Ownable = artifacts.require('./zeppelin/math/Ownable.sol')
-const Snowflake = artifacts.require('./Snowflake.sol')
+const PhoenixIdentity = artifacts.require('./PhoenixIdentity.sol')
 // const Status = artifacts.require('./resolvers/Status.sol')
 
-const StringUtils = artifacts.require('./resolvers/ClientRaindrop/StringUtils.sol')
-const ClientRaindrop = artifacts.require('./resolvers/ClientRaindrop/ClientRaindrop.sol')
-const OldClientRaindrop = artifacts.require('./_testing/OldClientRaindrop.sol')
+const StringUtils = artifacts.require('./resolvers/ClientPhoenixAuthentication/StringUtils.sol')
+const ClientPhoenixAuthentication = artifacts.require('./resolvers/ClientPhoenixAuthentication/ClientPhoenixAuthentication.sol')
+const OldClientPhoenixAuthentication = artifacts.require('./_testing/OldClientPhoenixAuthentication.sol')
 
 
 module.exports = async function(deployer, network) {
@@ -22,12 +22,12 @@ module.exports = async function(deployer, network) {
 
 
   await deployer.deploy(StringUtils)
-  await deployer.link(StringUtils, ClientRaindrop)
-  await deployer.link(StringUtils, OldClientRaindrop)
+  await deployer.link(StringUtils, ClientPhoenixAuthentication)
+  await deployer.link(StringUtils, OldClientPhoenixAuthentication)
 
   await deployer.deploy(SafeMath)
   await deployer.link(SafeMath, PhoenixToken)
-  await deployer.link(SafeMath, Snowflake)
+  await deployer.link(SafeMath, PhoenixIdentity)
 
 
   await deployer.deploy(Ownable)

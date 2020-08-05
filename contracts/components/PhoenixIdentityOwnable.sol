@@ -4,7 +4,7 @@ import '../interfaces/IdentityRegistryInterfaceShort.sol';
 import '../zeppelin/ownership/Ownable.sol';
 
 // DONE
-// import relevant Snowflake contract
+// import relevant PhoenixIdentity contract
 // contructor
 // function isOwner()
 // add getter and setter for Identity Registry address
@@ -14,14 +14,14 @@ import '../zeppelin/ownership/Ownable.sol';
 //
 
 /**
- * @title SnowflakeOwnable
- * @notice Snowflake-based authorizations
+ * @title PhoenixIdentityOwnable
+ * @notice PhoenixIdentity-based authorizations
  *
- * @dev The SnowflakeOwnable contract stores the EIN of the owner of a contract, and provides basic authorization functions, not based on an address as it is usual (think of "Ownable") but based on an EIN. This simplifies the implementation of "user permissions" when using Snowflakes.
+ * @dev The PhoenixIdentityOwnable contract stores the EIN of the owner of a contract, and provides basic authorization functions, not based on an address as it is usual (think of "Ownable") but based on an EIN. This simplifies the implementation of "user permissions" when using PhoenixIdentitys.
  *
  * @author Fatima Castiglione Maldonado <castiglionemaldonado@gmail.com>
  */
-contract SnowflakeOwnable is Ownable {
+contract PhoenixIdentityOwnable is Ownable {
 
     //address private _owner;
     uint public ownerEIN;
@@ -54,11 +54,11 @@ contract SnowflakeOwnable is Ownable {
     * @notice Throws if called by any account other than the owner
     * @dev This works on EINs, not on addresses
     */
-    modifier onlySnowflakeOwner() {
-        _onlySnowflakeOwner();
+    modifier onlyPhoenixIdentityOwner() {
+        _onlyPhoenixIdentityOwner();
         _;
     }
-    function _onlySnowflakeOwner() private view {
+    function _onlyPhoenixIdentityOwner() private view {
         require(isEINowner(), "Must be the EIN owner to call this function");
     }
 
@@ -98,7 +98,7 @@ contract SnowflakeOwnable is Ownable {
     *
     * @param _newOwnerEIN The EIN for the new owner
     */
-    function setOwnerEIN(uint _newOwnerEIN) public onlySnowflakeOwner {
+    function setOwnerEIN(uint _newOwnerEIN) public onlyPhoenixIdentityOwner {
         require(identityRegistryAddress != address(0), '1. The identity registry address is required');
         require(identityRegistry.identityExists(_newOwnerEIN), "New owner identity must exist");
         uint _callerEIN = identityRegistry.getEIN(msg.sender);
@@ -140,7 +140,7 @@ contract SnowflakeOwnable is Ownable {
     * @notice Allows the current owner to relinquish control of the contract
     * @dev Renouncing to ownership will leave the contract without an owner. It will not be possible to call the functions which use the 'onlyOwner' modifier anymore
     */
-    function renounceOwnership() public onlySnowflakeOwner {
+    function renounceOwnership() public onlyPhoenixIdentityOwner {
         emit OwnershipTransferred(ownerEIN, 0);
         ownerEIN = 0;
     }

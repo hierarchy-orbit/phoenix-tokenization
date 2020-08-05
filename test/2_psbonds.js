@@ -27,7 +27,7 @@ console.log(users)
   })
 
 
-  it('Snowflake identities created for all accounts', async() => {
+  it('PhoenixIdentity identities created for all accounts', async() => {
     for (let i = 0; i < users.length; i++) {
       await utilities.createIdentity(users[i], instances)
     }

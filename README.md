@@ -4,7 +4,7 @@
 
 <h3>Description</h3>
 
-This is a set of Ethereum Smart Contracts which work on top of Phoenix Snowflake. They allow a validated Snowflake address to create standardized Security Tokens that can be issued, bought and sold, validated, transferred, paid as dividends, and destroyed.
+This is a set of Ethereum Smart Contracts which work on top of Phoenix PhoenixIdentity. They allow a validated PhoenixIdentity address to create standardized Security Tokens that can be issued, bought and sold, validated, transferred, paid as dividends, and destroyed.
 
 
 
@@ -57,15 +57,15 @@ You can find an example test run in the file test.txt
 
     PST Escrow - keep PHNX tokens in escrow contract within ERC-1484 of issuer, until offering is closed, release back to ERC-1484 wallet ID of subscriber from escrow if conditions in legal contract aren’t met
 
-    Subscription - use the Snowflake Subscription task to create a framework for payments and recurring subscriptions to a securitization
+    Subscription - use the PhoenixIdentity Subscription task to create a framework for payments and recurring subscriptions to a securitization
 
-    Authenticate - use Phoenix Raindrop to authenticate issuance, purchase/sale, transfer
+    Authenticate - use Phoenix PhoenixAuthentication to authenticate issuance, purchase/sale, transfer
 
     Carried Interest - calculate carried interest based on the Interest Smart Contract utility function (link when posted)
 
     Interest Payout - payout carried interest/management fee to token issuer on a set schedule to defined wallet IDs on the whitelist
 
-    Dividend Payout - payout dividend from admin pro-rata to Snowflake wallet holders in PHNX
+    Dividend Payout - payout dividend from admin pro-rata to PhoenixIdentity wallet holders in PHNX
     
 
 

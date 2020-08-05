@@ -11,7 +11,7 @@ import './modules/PaymentSystem.sol';
 // IdentityRegistry: 0xa7ba71305be9b2dfead947dc0e5730ba2abd28ea
 
 
-interface Raindrop {
+interface PhoenixAuthentication {
     function authenticate(address _sender, uint _value, uint _challenge, uint _partnerId) external;
 }
 
@@ -65,7 +65,7 @@ contract STO_Interests {
  *
  * @notice The Phoenix Security Token is part of the Phoenix Security Tokens Framework,
  * a system to allow organizations to create their own Security Tokens,
- * related to their Snowflake identities, serviced by external KYC, AML and CFT services,
+ * related to their PhoenixIdentity identities, serviced by external KYC, AML and CFT services,
  * and restrainable by some rules.
  *
  * @author Juan Livingston <juanlivingston@gmail.com>
@@ -103,7 +103,7 @@ contract PSToken is MAIN_PARAMS, STO_FLAGS, STO_PARAMS, STO_Interests, PaymentSy
     uint256 public numberOfInvestors;
     uint256 public phoenixsReleased; // Number of Phoenixs released by owner
 
-    address public raindropAddress;
+    address public phoenixAuthenticationAddress;
 
     // address InterestSolver;
 
@@ -347,7 +347,7 @@ contract PSToken is MAIN_PARAMS, STO_FLAGS, STO_PARAMS, STO_Interests, PaymentSy
         IdentityRegistry = IdentityRegistryInterface(_identityRegistry);
         // 0xa7ba71305bE9b2DFEad947dc0E5730BA2ABd28EA
         BuyerRegistry = PSTBuyerRegistryInterface(_buyerRegistry);
-        // raindropAddress = _RaindropAddress;
+        // phoenixAuthenticationAddress = _PhoenixAuthenticationAddress;
 
         Owner = _owner;
         einOwner = IdentityRegistry.getEIN(Owner);
@@ -864,16 +864,16 @@ contract PSToken is MAIN_PARAMS, STO_FLAGS, STO_PARAMS, STO_Interests, PaymentSy
     }
 
   /**
-   * @notice Raindrop authentication
+   * @notice PhoenixAuthentication 
    */
     function authenticate(uint _value, uint _challenge, uint _partnerId) public {
-        Raindrop raindrop = Raindrop(raindropAddress);
-        raindrop.authenticate(msg.sender, _value, _challenge, _partnerId);
+        PhoenixAuthentication phoenixAuthentication = PhoenixAuthentication(phoenixAuthenticationAddress);
+        phoenixAuthentication.authenticate(msg.sender, _value, _challenge, _partnerId);
         _doTransfer(msg.sender, Owner, _value);
     }
 
   /**
-   * @notice Raindrop authentication
+   * @notice PhoenixAuthentication 
    */
     function _doTransfer(address _from, address _to, uint256 _amount) private {
         uint256 _period = getPeriod();

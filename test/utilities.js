@@ -82,14 +82,14 @@ const createIdentity = async(_user, instances) => {
       'I authorize the creation of an Identity on my behalf.',
       _user.recoveryAddress,
       _user.address,
-      { t: 'address[]', v: [instances.Snowflake.address] },
+      { t: 'address[]', v: [instances.PhoenixIdentity.address] },
       { t: 'address[]', v: [] },
       timestamp
     )
 
     const permission = await sign(permissionString, _user.address, _user.private)
 
-    await instances.Snowflake.createIdentityDelegated(
+    await instances.PhoenixIdentity.createIdentityDelegated(
       _user.recoveryAddress, _user.address, [], _user.phoenixID, permission.v, permission.r, permission.s, timestamp, {from: _user.address}
     )
 
@@ -98,8 +98,8 @@ const createIdentity = async(_user, instances) => {
     await verifyIdentity(_user.identity, instances.IdentityRegistry, {
       recoveryAddress:     _user.recoveryAddress,
       associatedAddresses: [_user.address],
-      providers:           [instances.Snowflake.address],
-      resolvers:           [instances.ClientRaindrop.address]
+      providers:           [instances.PhoenixIdentity.address],
+      resolvers:           [instances.ClientPhoenixAuthentication.address]
     })
 
 }

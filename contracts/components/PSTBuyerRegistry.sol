@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 import './DateTime.sol';
 import './PSTokenRegistry.sol';
 import './PSTServiceRegistry.sol';
-import './SnowflakeOwnable.sol';
+import './PhoenixIdentityOwnable.sol';
 import '../interfaces/IdentityRegistryInterfaceShort.sol';
 
 
@@ -22,7 +22,7 @@ import '../interfaces/IdentityRegistryInterfaceShort.sol';
  * @author Fatima Castiglione Maldonado <castiglionemaldonado@gmail.com>
  */
 
-contract PSTBuyerRegistry is SnowflakeOwnable {
+contract PSTBuyerRegistry is PhoenixIdentityOwnable {
 
 
     // token rules data
