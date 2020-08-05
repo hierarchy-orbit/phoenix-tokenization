@@ -11,7 +11,7 @@ This is a set of Ethereum Smart Contracts which work on top of Phoenix PhoenixId
 <h3>Architecture draft</h3>
 
 <p>
-  <img src="images/PST-Securities-Architecture.png" width="500">
+  <img src="https://github.com/PhoenixDAO/phoenix-tokenization/blob/master/images/PST-Securities-Architecture.jpg" width="500">
 </p>
 
 <h3>To run tests</h3>
